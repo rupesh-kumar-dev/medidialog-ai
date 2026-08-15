@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { BrandLoader } from "@/components/brand";
 import { MedicalDisclaimer } from "@/components/disclaimer";
-import { RiskCard } from "@/components/risk";
+import { RiskCard, type RiskLevel } from "@/components/risk";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
@@ -84,7 +84,7 @@ function ReportPage() {
         </p>
       </header>
 
-      <RiskCard level={report.risk_level} summary={report.summary} />
+      <RiskCard level={report.risk_level as RiskLevel} explanation={report.summary} />
 
       <Card>
         <CardHeader>
@@ -128,7 +128,7 @@ function ReportPage() {
   );
 }
 
-function ListCard({ title, items }: { title: string; items?: string[] }) {
+function ListCard({ title, items }: { title: string; items?: string[] | undefined }) {
   if (!items?.length) return null;
   return (
     <Card>

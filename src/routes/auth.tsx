@@ -50,15 +50,15 @@ function AuthPage() {
   async function signIn(e: React.FormEvent) {
     e.preventDefault();
     const parsedEmail = emailSchema.safeParse(email);
-    if (!parsedEmail.success) return toast.error(parsedEmail.error.issues[0]?.message);
-    if (!password) return toast.error("Please enter your password.");
+    if (!parsedEmail.success) { toast.error(parsedEmail.error.issues[0]?.message); return; }
+    if (!password) { toast.error("Please enter your password."); return; }
     setBusy(true);
     const { error } = await supabase.auth.signInWithPassword({
       email: parsedEmail.data,
       password,
     });
     setBusy(false);
-    if (error) return toast.error("We couldn't sign you in. Please check your details.");
+    if (error) { toast.error("We couldn't sign you in. Please check your details."); return; }
     toast.success("Welcome back to MediSage AI.");
     void navigate({ to: "/dashboard" });
   }
@@ -68,9 +68,9 @@ function AuthPage() {
     const parsedName = nameSchema.safeParse(fullName);
     const parsedEmail = emailSchema.safeParse(email);
     const parsedPassword = passwordSchema.safeParse(password);
-    if (!parsedName.success) return toast.error(parsedName.error.issues[0]?.message);
-    if (!parsedEmail.success) return toast.error(parsedEmail.error.issues[0]?.message);
-    if (!parsedPassword.success) return toast.error(parsedPassword.error.issues[0]?.message);
+    if (!parsedName.success) { toast.error(parsedName.error.issues[0]?.message); return; }
+    if (!parsedEmail.success) { toast.error(parsedEmail.error.issues[0]?.message); return; }
+    if (!parsedPassword.success) { toast.error(parsedPassword.error.issues[0]?.message); return; }
 
     setBusy(true);
     const { data, error } = await supabase.auth.signUp({
@@ -82,7 +82,7 @@ function AuthPage() {
       },
     });
     setBusy(false);
-    if (error) return toast.error("We couldn't create your account. Please try again.");
+    if (error) { toast.error("We couldn't create your account. Please try again."); return; }
     if (!data.session) {
       toast.success("Account created. Please check your email to confirm your address.");
       return;
@@ -97,20 +97,20 @@ function AuthPage() {
       redirect_uri: window.location.origin,
     });
     setBusy(false);
-    if (result.error) return toast.error("Google sign-in didn't work. Please try again.");
-    if (result.redirected) return;
+    if (result.error) { toast.error("Google sign-in didn't work. Please try again."); return; }
+    if (result.redirected) { return; }
     void navigate({ to: "/dashboard" });
   }
 
   async function forgotPassword() {
     const parsedEmail = emailSchema.safeParse(email);
-    if (!parsedEmail.success) return toast.error("Enter your email above first.");
+    if (!parsedEmail.success) { toast.error("Enter your email above first."); return; }
     setBusy(true);
     const { error } = await supabase.auth.resetPasswordForEmail(parsedEmail.data, {
       redirectTo: `${window.location.origin}/reset-password`,
     });
     setBusy(false);
-    if (error) return toast.error("We couldn't send the reset email. Please try again.");
+    if (error) { toast.error("We couldn't send the reset email. Please try again."); return; }
     setSentReset(true);
     toast.success("If that email exists, a reset link is on the way.");
   }

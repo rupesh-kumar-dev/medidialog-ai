@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { BrandLoader } from "@/components/brand";
 import { MedicalDisclaimer } from "@/components/disclaimer";
-import { RiskBadge } from "@/components/risk";
+import { RiskBadge, type RiskLevel } from "@/components/risk";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 
@@ -72,7 +72,7 @@ function History() {
                     {new Date(r.created_at).toLocaleString()}
                   </p>
                 </div>
-                <RiskBadge level={r.risk_level} />
+                <RiskBadge level={r.risk_level as RiskLevel} />
               </Link>
             </li>
           ))}

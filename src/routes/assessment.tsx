@@ -30,7 +30,7 @@ import { analyzeAssessment, getFollowUpQuestions, type AssessmentResult } from "
 import { useAuth } from "@/lib/auth";
 import { ALL_SYMPTOMS, DEMO_SCENARIOS, SYMPTOM_CATEGORIES } from "@/lib/health-data";
 
-type Search = { demo?: string };
+type Search = { demo?: string | undefined };
 
 export const Route = createFileRoute("/assessment")({
   validateSearch: (search: Record<string, unknown>): Search => ({
@@ -399,7 +399,7 @@ function AssessmentPage() {
               <CardDescription>Select everything that applies.</CardDescription>
             </CardHeader>
             <CardContent>
-              <Tabs defaultValue={SYMPTOM_CATEGORIES[0]?.id}>
+              <Tabs defaultValue={SYMPTOM_CATEGORIES[0]!.id}>
                 <TabsList className="flex h-auto flex-wrap justify-start gap-1">
                   {SYMPTOM_CATEGORIES.map((c) => (
                     <TabsTrigger key={c.id} value={c.id} className="text-xs">

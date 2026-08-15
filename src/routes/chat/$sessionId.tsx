@@ -76,7 +76,10 @@ function ChatThread() {
       .insert({ user_id: user.id })
       .select("id")
       .maybeSingle();
-    if (!data?.id) return toast.error("We couldn't start a new conversation.");
+    if (!data?.id) {
+      toast.error("We couldn't start a new conversation.");
+      return;
+    }
     void navigate({ to: "/chat/$sessionId", params: { sessionId: data.id } });
   }
 

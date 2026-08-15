@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { BrandLoader } from "@/components/brand";
 import { MedicalDisclaimer } from "@/components/disclaimer";
-import { RiskBadge } from "@/components/risk";
+import { RiskBadge, type RiskLevel } from "@/components/risk";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
@@ -97,7 +97,7 @@ function Dashboard() {
                     {new Date(r.created_at).toLocaleString()}
                   </p>
                 </div>
-                <RiskBadge level={r.risk_level} />
+                <RiskBadge level={r.risk_level as RiskLevel} />
               </Link>
             ))
           )}
