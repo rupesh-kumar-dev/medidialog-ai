@@ -14,7 +14,176 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      assessments: {
+        Row: {
+          answers: Json
+          created_at: string
+          description: string | null
+          duration: string | null
+          explanation: string | null
+          id: string
+          next_steps: Json
+          possible_conditions: Json
+          recommendations: Json
+          risk_level: string
+          severity: string | null
+          summary: string | null
+          symptoms: string[]
+          user_id: string
+          warning_signs: Json
+        }
+        Insert: {
+          answers?: Json
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          explanation?: string | null
+          id?: string
+          next_steps?: Json
+          possible_conditions?: Json
+          recommendations?: Json
+          risk_level?: string
+          severity?: string | null
+          summary?: string | null
+          symptoms?: string[]
+          user_id: string
+          warning_signs?: Json
+        }
+        Update: {
+          answers?: Json
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          explanation?: string | null
+          id?: string
+          next_steps?: Json
+          possible_conditions?: Json
+          recommendations?: Json
+          risk_level?: string
+          severity?: string | null
+          summary?: string | null
+          symptoms?: string[]
+          user_id?: string
+          warning_signs?: Json
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "chat_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_sessions: {
+        Row: {
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          age: number | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          gender: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          age?: number | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          gender?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          age?: number | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          gender?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      symptom_journal: {
+        Row: {
+          created_at: string
+          entry_date: string
+          id: string
+          notes: string | null
+          symptoms: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          entry_date?: string
+          id?: string
+          notes?: string | null
+          symptoms: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          entry_date?: string
+          id?: string
+          notes?: string | null
+          symptoms?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
