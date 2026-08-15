@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssessmentRouteImport } from './routes/assessment'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as ChatIndexRouteImport } from './routes/chat/index'
+import { Route as ChatSessionIdRouteImport } from './routes/chat/$sessionId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +36,32 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChatIndexRoute = ChatIndexRouteImport.update({
+  id: '/chat/',
+  path: '/chat/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatSessionIdRoute = ChatSessionIdRouteImport.update({
+  id: '/chat/$sessionId',
+  path: '/chat/$sessionId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
   '/auth': typeof AuthRoute
   '/api/chat': typeof ApiChatRoute
+  '/chat/$sessionId': typeof ChatSessionIdRoute
+  '/chat/': typeof ChatIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
   '/auth': typeof AuthRoute
   '/api/chat': typeof ApiChatRoute
+  '/chat/$sessionId': typeof ChatSessionIdRoute
+  '/chat': typeof ChatIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +69,23 @@ export interface FileRoutesById {
   '/assessment': typeof AssessmentRoute
   '/auth': typeof AuthRoute
   '/api/chat': typeof ApiChatRoute
+  '/chat/$sessionId': typeof ChatSessionIdRoute
+  '/chat/': typeof ChatIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/assessment' | '/auth' | '/api/chat'
+  fullPaths:
+    '/' | '/assessment' | '/auth' | '/api/chat' | '/chat/$sessionId' | '/chat/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/assessment' | '/auth' | '/api/chat'
-  id: '__root__' | '/' | '/assessment' | '/auth' | '/api/chat'
+  to: '/' | '/assessment' | '/auth' | '/api/chat' | '/chat/$sessionId' | '/chat'
+  id:
+    | '__root__'
+    | '/'
+    | '/assessment'
+    | '/auth'
+    | '/api/chat'
+    | '/chat/$sessionId'
+    | '/chat/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +93,8 @@ export interface RootRouteChildren {
   AssessmentRoute: typeof AssessmentRoute
   AuthRoute: typeof AuthRoute
   ApiChatRoute: typeof ApiChatRoute
+  ChatSessionIdRoute: typeof ChatSessionIdRoute
+  ChatIndexRoute: typeof ChatIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +127,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/chat/': {
+      id: '/chat/'
+      path: '/chat'
+      fullPath: '/chat/'
+      preLoaderRoute: typeof ChatIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat/$sessionId': {
+      id: '/chat/$sessionId'
+      path: '/chat/$sessionId'
+      fullPath: '/chat/$sessionId'
+      preLoaderRoute: typeof ChatSessionIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +149,8 @@ const rootRouteChildren: RootRouteChildren = {
   AssessmentRoute: AssessmentRoute,
   AuthRoute: AuthRoute,
   ApiChatRoute: ApiChatRoute,
+  ChatSessionIdRoute: ChatSessionIdRoute,
+  ChatIndexRoute: ChatIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
