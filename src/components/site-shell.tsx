@@ -27,6 +27,7 @@ import { displayName, useAuth } from "@/lib/auth";
 import { DISCLAIMER_TEXT } from "@/lib/health-data";
 
 const NAV = [
+  { to: "/dashboard", label: "Dashboard" },
   { to: "/assessment", label: "Assessment" },
   { to: "/chat", label: "AI Chat" },
   { to: "/education", label: "Health Education" },
