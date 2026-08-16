@@ -16,6 +16,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as EducationRouteImport } from './routes/education'
 import { Route as HistoryRouteImport } from './routes/history'
+import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RiskRouteImport } from './routes/risk'
@@ -58,6 +59,11 @@ const EducationRoute = EducationRouteImport.update({
 const HistoryRoute = HistoryRouteImport.update({
   id: '/history',
   path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsRoute = InsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/education': typeof EducationRoute
   '/history': typeof HistoryRoute
+  '/insights': typeof InsightsRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/risk': typeof RiskRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/education': typeof EducationRoute
   '/history': typeof HistoryRoute
+  '/insights': typeof InsightsRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/risk': typeof RiskRoute
@@ -144,6 +152,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/education': typeof EducationRoute
   '/history': typeof HistoryRoute
+  '/insights': typeof InsightsRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/risk': typeof RiskRoute
@@ -163,6 +172,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/education'
     | '/history'
+    | '/insights'
     | '/privacy'
     | '/profile'
     | '/risk'
@@ -180,6 +190,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/education'
     | '/history'
+    | '/insights'
     | '/privacy'
     | '/profile'
     | '/risk'
@@ -197,6 +208,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/education'
     | '/history'
+    | '/insights'
     | '/privacy'
     | '/profile'
     | '/risk'
@@ -215,6 +227,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   EducationRoute: typeof EducationRoute
   HistoryRoute: typeof HistoryRoute
+  InsightsRoute: typeof InsightsRoute
   PrivacyRoute: typeof PrivacyRoute
   ProfileRoute: typeof ProfileRoute
   RiskRoute: typeof RiskRoute
@@ -274,6 +287,13 @@ declare module '@tanstack/react-router' {
       path: '/history'
       fullPath: '/history'
       preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights': {
+      id: '/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof InsightsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -343,6 +363,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   EducationRoute: EducationRoute,
   HistoryRoute: HistoryRoute,
+  InsightsRoute: InsightsRoute,
   PrivacyRoute: PrivacyRoute,
   ProfileRoute: ProfileRoute,
   RiskRoute: RiskRoute,
