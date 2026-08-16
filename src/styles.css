@@ -239,3 +239,55 @@
     display: none !important;
   }
 }
+
+/* Dashboard surface: soft blue-to-teal tint that separates it from the site. */
+@utility dashboard-surface {
+  background:
+    radial-gradient(
+      1000px 420px at 12% -8%,
+      color-mix(in oklab, var(--color-primary) 14%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      900px 420px at 92% 4%,
+      color-mix(in oklab, var(--color-accent) 14%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--color-primary) 6%, var(--color-background));
+}
+
+@utility feature-card {
+  border-radius: var(--radius-2xl);
+  border: 1px solid color-mix(in oklab, var(--color-primary) 12%, var(--color-border));
+  background-color: var(--color-card);
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
+    border-color: color-mix(in oklab, var(--color-primary) 40%, transparent);
+  }
+  .feature-card:hover .feature-card-image {
+    transform: scale(1.06);
+  }
+  .feature-card:hover .feature-card-arrow {
+    transform: translateX(4px);
+    color: var(--color-primary);
+  }
+}
+
+@utility feature-card-image {
+  transition: transform 260ms ease;
+}
+
+@utility feature-card-arrow {
+  transition:
+    transform 200ms ease,
+    color 200ms ease;
+}
