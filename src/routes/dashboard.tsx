@@ -144,7 +144,7 @@ function Dashboard() {
           kind: "assessment" as const,
           id: a.id,
           title: "Symptom Assessment",
-          detail: a.summary,
+          detail: a.summary ?? "Saved assessment",
           at: a.created_at,
         })),
         ...(sessions.data ?? []).map((s) => ({
