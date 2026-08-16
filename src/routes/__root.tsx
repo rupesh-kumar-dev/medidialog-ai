@@ -80,20 +80,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "MediSage AI — Your Personal Healthcare Assistant" },
+      { title: "MediSage AI — Smarter Health Conversations, Powered by AI" },
       {
         name: "description",
         content:
-          "MediSage AI helps you describe symptoms, chat with an AI health assistant and understand your next step. Not a diagnosis.",
+          "Describe your symptoms, ask health questions and receive intelligent, easy-to-understand guidance with MediSage AI.",
       },
       { name: "author", content: "MediSage AI" },
-      { property: "og:title", content: "MediSage AI — Your Personal Healthcare Assistant" },
+      { property: "og:title", content: "MediSage AI — Smarter Health Conversations, Powered by AI" },
       {
         property: "og:description",
-        content: "Ask. Analyze. Understand. Take the Next Step.",
+        content: "Describe your symptoms, ask health questions and receive intelligent, easy-to-understand guidance with MediSage AI.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "MediSage AI — Smarter Health Conversations, Powered by AI" },
+      { name: "twitter:description", content: "Describe your symptoms, ask health questions and receive intelligent, easy-to-understand guidance with MediSage AI." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7f3f7a520b5951a02747a95c1e063ac6/id-preview-c12d05e8--9ed32fe1-2a4f-44de-8451-0e8a5de0872f.lovable.app-1786888831761.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7f3f7a520b5951a02747a95c1e063ac6/id-preview-c12d05e8--9ed32fe1-2a4f-44de-8451-0e8a5de0872f.lovable.app-1786888831761.png" },
     ],
     links: [
       {

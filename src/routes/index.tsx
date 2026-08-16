@@ -33,10 +33,10 @@ export const Route = createFileRoute("/")({
         content:
           "Describe your symptoms, ask health questions and receive intelligent, easy-to-understand guidance with MediSage AI.",
       },
-      { property: "og:title", content: "MediSage AI — Smarter Health Conversations" },
+      { property: "og:title", content: "MediSage AI — Smarter Health Conversations, Powered by AI" },
       {
         property: "og:description",
-        content: "Ask. Analyze. Understand. Take the Next Step.",
+        content: "Describe your symptoms, ask health questions and receive intelligent, easy-to-understand guidance with MediSage AI.",
       },
     ],
   }),
