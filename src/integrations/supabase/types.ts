@@ -127,6 +127,60 @@ export type Database = {
         }
         Relationships: []
       }
+      medical_reports: {
+        Row: {
+          abnormal_count: number
+          analysis: Json | null
+          created_at: string
+          error_message: string | null
+          file_path: string | null
+          file_type: string | null
+          id: string
+          kind: string
+          lab_name: string | null
+          report_date: string | null
+          status: string
+          summary: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          abnormal_count?: number
+          analysis?: Json | null
+          created_at?: string
+          error_message?: string | null
+          file_path?: string | null
+          file_type?: string | null
+          id?: string
+          kind?: string
+          lab_name?: string | null
+          report_date?: string | null
+          status?: string
+          summary?: string | null
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          abnormal_count?: number
+          analysis?: Json | null
+          created_at?: string
+          error_message?: string | null
+          file_path?: string | null
+          file_type?: string | null
+          id?: string
+          kind?: string
+          lab_name?: string | null
+          report_date?: string | null
+          status?: string
+          summary?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age: number | null
