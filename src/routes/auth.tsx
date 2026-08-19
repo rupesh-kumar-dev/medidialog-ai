@@ -42,6 +42,7 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [sentReset, setSentReset] = useState(false);
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
 
   useEffect(() => {
     if (user) void navigate({ to: "/dashboard", replace: true });
@@ -58,9 +59,9 @@ function AuthPage() {
       password,
     });
     setBusy(false);
-    if (error) { toast.error("We couldn't sign you in. Please check your details."); return; }
+    if (error) { toast.error(signInMessage(error.message)); return; }
     toast.success("Welcome back to MediSage AI.");
-    void navigate({ to: "/dashboard" });
+    void navigate({ to: "/dashboard", replace: true });
   }
 
   async function signUp(e: React.FormEvent) {
@@ -82,13 +83,13 @@ function AuthPage() {
       },
     });
     setBusy(false);
-    if (error) { toast.error("We couldn't create your account. Please try again."); return; }
+    if (error) { toast.error(signUpMessage(error.message)); return; }
     if (!data.session) {
       toast.success("Account created. Please check your email to confirm your address.");
       return;
     }
     toast.success("Your MediSage AI account is ready.");
-    void navigate({ to: "/dashboard" });
+    void navigate({ to: "/dashboard", replace: true });
   }
 
   async function googleSignIn() {
@@ -99,7 +100,7 @@ function AuthPage() {
     setBusy(false);
     if (result.error) { toast.error("Google sign-in didn't work. Please try again."); return; }
     if (result.redirected) { return; }
-    void navigate({ to: "/dashboard" });
+    void navigate({ to: "/dashboard", replace: true });
   }
 
   async function forgotPassword() {
@@ -129,7 +130,7 @@ function AuthPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="signin">
+            <Tabs value={mode} onValueChange={(v) => setMode(v === "signup" ? "signup" : "signin")}>
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="signin">Sign in</TabsTrigger>
                 <TabsTrigger value="signup">Sign up</TabsTrigger>
@@ -141,6 +142,7 @@ function AuthPage() {
                     id="signin-email"
                     label="Email"
                     type="email"
+                    autoComplete="email"
                     value={email}
                     onChange={setEmail}
                   />
@@ -148,6 +150,7 @@ function AuthPage() {
                     id="signin-password"
                     label="Password"
                     type="password"
+                    autoComplete="current-password"
                     value={password}
                     onChange={setPassword}
                   />
@@ -167,11 +170,12 @@ function AuthPage() {
 
               <TabsContent value="signup" className="mt-4">
                 <form className="space-y-4" onSubmit={signUp}>
-                  <Field id="signup-name" label="Full name" value={fullName} onChange={setFullName} />
+                  <Field id="signup-name" label="Full name" autoComplete="name" value={fullName} onChange={setFullName} />
                   <Field
                     id="signup-email"
                     label="Email"
                     type="email"
+                    autoComplete="email"
                     value={email}
                     onChange={setEmail}
                   />
@@ -179,8 +183,10 @@ function AuthPage() {
                     id="signup-password"
                     label="Password"
                     type="password"
+                    autoComplete="new-password"
                     value={password}
                     onChange={setPassword}
+                    hint="At least 8 characters."
                   />
                   <Button type="submit" className="w-full" disabled={busy}>
                     {busy ? "Please wait…" : "Create account"}
@@ -210,18 +216,44 @@ function AuthPage() {
   );
 }
 
+function signInMessage(raw: string) {
+  const m = raw.toLowerCase();
+  if (m.includes("invalid login")) return "Incorrect email or password. Please try again.";
+  if (m.includes("email not confirmed"))
+    return "Please confirm your email address first — check your inbox for the link.";
+  if (m.includes("rate limit") || m.includes("too many"))
+    return "Too many attempts. Please wait a moment and try again.";
+  if (m.includes("fetch") || m.includes("network"))
+    return "We couldn't reach the server. Check your connection and try again.";
+  return "We couldn't sign you in. Please check your details.";
+}
+
+function signUpMessage(raw: string) {
+  const m = raw.toLowerCase();
+  if (m.includes("already registered") || m.includes("already been registered") || m.includes("user already"))
+    return "That email already has an account. Try signing in instead.";
+  if (m.includes("password")) return "Please choose a stronger password (at least 8 characters).";
+  if (m.includes("rate limit") || m.includes("too many"))
+    return "Too many attempts. Please wait a moment and try again.";
+  return "We couldn't create your account. Please try again.";
+}
+
 function Field({
   id,
   label,
   value,
   onChange,
   type = "text",
+  autoComplete,
+  hint,
 }: {
   id: string;
   label: string;
   value: string;
   onChange: (v: string) => void;
   type?: string;
+  autoComplete?: string;
+  hint?: string;
 }) {
   return (
     <div className="space-y-1.5">
@@ -231,9 +263,10 @@ function Field({
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        autoComplete={type === "password" ? "current-password" : "on"}
+        autoComplete={autoComplete ?? "on"}
         required
       />
+      {hint ? <p className="text-xs text-muted-foreground">{hint}</p> : null}
     </div>
   );
 }
