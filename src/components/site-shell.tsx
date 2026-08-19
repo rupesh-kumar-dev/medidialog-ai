@@ -151,7 +151,19 @@ export function SiteShell({ children }: { children: ReactNode }) {
                     >
                       Sign in / Sign up
                     </Link>
-                  ) : null}
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => void handleSignOut()}
+                      disabled={signingOut}
+                      className="mt-2 flex items-center justify-center gap-2 rounded-md border border-border px-3 py-3 text-sm font-semibold"
+                    >
+                      <LogOut className="h-4 w-4" /> {signingOut ? "Signing out…" : "Sign out"}
+                    </button>
+                  )}
+                  <div className="mt-2 border-t border-border pt-2">
+                    <ThemeToggle showLabel />
+                  </div>
                 </nav>
               </SheetContent>
             </Sheet>
