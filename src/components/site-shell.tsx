@@ -49,12 +49,25 @@ const MOBILE_TABS = [
 export function SiteShell({ children }: { children: ReactNode }) {
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
 
   async function handleSignOut() {
-    await signOut();
-    toast.success("You have been signed out.");
-    void navigate({ to: "/", replace: true });
+    if (signingOut) return;
+    setSigningOut(true);
+    try {
+      await queryClient.cancelQueries();
+      queryClient.clear();
+      await signOut();
+      setMenuOpen(false);
+      toast.success("You have been signed out.");
+      void navigate({ to: "/", replace: true });
+    } catch {
+      toast.error("We couldn't sign you out. Please try again.");
+    } finally {
+      setSigningOut(false);
+    }
   }
 
   return (
