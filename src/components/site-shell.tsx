@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
   BookOpen,
@@ -13,6 +14,7 @@ import { useState, type ReactNode } from "react";
 import { toast } from "sonner";
 
 import { Logo } from "@/components/brand";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -47,12 +49,25 @@ const MOBILE_TABS = [
 export function SiteShell({ children }: { children: ReactNode }) {
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
 
   async function handleSignOut() {
-    await signOut();
-    toast.success("You have been signed out.");
-    void navigate({ to: "/", replace: true });
+    if (signingOut) return;
+    setSigningOut(true);
+    try {
+      await queryClient.cancelQueries();
+      queryClient.clear();
+      await signOut();
+      setMenuOpen(false);
+      toast.success("You have been signed out.");
+      void navigate({ to: "/", replace: true });
+    } catch {
+      toast.error("We couldn't sign you out. Please try again.");
+    } finally {
+      setSigningOut(false);
+    }
   }
 
   return (
@@ -74,6 +89,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           </nav>
 
           <div className="ml-auto flex items-center gap-2 lg:ml-0">
+            <ThemeToggle />
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -135,7 +151,19 @@ export function SiteShell({ children }: { children: ReactNode }) {
                     >
                       Sign in / Sign up
                     </Link>
-                  ) : null}
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => void handleSignOut()}
+                      disabled={signingOut}
+                      className="mt-2 flex items-center justify-center gap-2 rounded-md border border-border px-3 py-3 text-sm font-semibold"
+                    >
+                      <LogOut className="h-4 w-4" /> {signingOut ? "Signing out…" : "Sign out"}
+                    </button>
+                  )}
+                  <div className="mt-2 border-t border-border pt-2">
+                    <ThemeToggle showLabel />
+                  </div>
                 </nav>
               </SheetContent>
             </Sheet>

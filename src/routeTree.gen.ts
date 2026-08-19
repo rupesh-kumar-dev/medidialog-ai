@@ -19,6 +19,7 @@ import { Route as HistoryRouteImport } from './routes/history'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RiskRouteImport } from './routes/risk'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
@@ -76,6 +77,11 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RiskRoute = RiskRouteImport.update({
   id: '/risk',
   path: '/risk',
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/insights': typeof InsightsRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/risk': typeof RiskRoute
   '/tools': typeof ToolsRoute
   '/api/chat': typeof ApiChatRoute
@@ -136,6 +143,7 @@ export interface FileRoutesByTo {
   '/insights': typeof InsightsRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/risk': typeof RiskRoute
   '/tools': typeof ToolsRoute
   '/api/chat': typeof ApiChatRoute
@@ -155,6 +163,7 @@ export interface FileRoutesById {
   '/insights': typeof InsightsRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/risk': typeof RiskRoute
   '/tools': typeof ToolsRoute
   '/api/chat': typeof ApiChatRoute
@@ -175,6 +184,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/privacy'
     | '/profile'
+    | '/reset-password'
     | '/risk'
     | '/tools'
     | '/api/chat'
@@ -193,6 +203,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/privacy'
     | '/profile'
+    | '/reset-password'
     | '/risk'
     | '/tools'
     | '/api/chat'
@@ -211,6 +222,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/privacy'
     | '/profile'
+    | '/reset-password'
     | '/risk'
     | '/tools'
     | '/api/chat'
@@ -230,6 +242,7 @@ export interface RootRouteChildren {
   InsightsRoute: typeof InsightsRoute
   PrivacyRoute: typeof PrivacyRoute
   ProfileRoute: typeof ProfileRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   RiskRoute: typeof RiskRoute
   ToolsRoute: typeof ToolsRoute
   ApiChatRoute: typeof ApiChatRoute
@@ -310,6 +323,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/risk': {
       id: '/risk'
       path: '/risk'
@@ -366,6 +386,7 @@ const rootRouteChildren: RootRouteChildren = {
   InsightsRoute: InsightsRoute,
   PrivacyRoute: PrivacyRoute,
   ProfileRoute: ProfileRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   RiskRoute: RiskRoute,
   ToolsRoute: ToolsRoute,
   ApiChatRoute: ApiChatRoute,

@@ -173,7 +173,7 @@ Return ONLY JSON with this shape:
       .from("medical_reports")
       .update({
         status: "complete",
-        analysis: analysis as unknown as Record<string, unknown>,
+        analysis: JSON.parse(JSON.stringify(analysis)),
         summary: analysis.summary,
         abnormal_count: abnormal,
         lab_name: analysis.lab_name || null,

@@ -154,6 +154,19 @@
   --sidebar: oklch(0.22 0.035 250);
   --sidebar-foreground: oklch(0.97 0.005 230);
   --sidebar-border: oklch(1 0 0 / 12%);
+
+  --success-soft: oklch(0.3 0.05 160);
+  --warning-soft: oklch(0.32 0.06 70);
+  --danger-soft: oklch(0.32 0.07 25);
+
+  --gradient-soft: linear-gradient(
+    160deg,
+    oklch(0.22 0.04 250) 0%,
+    oklch(0.2 0.03 200) 55%,
+    oklch(0.18 0.03 250) 100%
+  );
+  --shadow-soft: 0 1px 2px oklch(0 0 0 / 40%), 0 8px 24px -12px oklch(0 0 0 / 55%);
+  --shadow-lift: 0 2px 6px oklch(0 0 0 / 45%), 0 18px 40px -18px oklch(0 0 0 / 65%);
 }
 
 @layer base {

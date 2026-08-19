@@ -5,8 +5,6 @@ import {
   FileText,
   HeartPulse,
   MessageCircle,
-  MessagesSquare,
-  Plus,
   Sparkles,
   Stethoscope,
   Wrench,
@@ -192,7 +190,7 @@ function Dashboard() {
           <h2 id="features-heading" className="text-lg font-semibold tracking-tight">
             What would you like to do?
           </h2>
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             {FEATURES.map((f) => (
               <Link key={f.to} to={f.to} className="feature-card group block overflow-hidden">
                 <div className="h-36 overflow-hidden bg-secondary/50">
@@ -215,23 +213,6 @@ function Dashboard() {
                 </div>
               </Link>
             ))}
-          </div>
-        </section>
-
-        {/* Quick actions */}
-        <section aria-labelledby="quick-heading" className="space-y-3">
-          <h2 id="quick-heading" className="text-lg font-semibold tracking-tight">
-            Quick actions
-          </h2>
-          <div className="flex flex-wrap gap-2.5">
-            <QuickAction to="/assessment" icon={<Plus className="h-4 w-4" />} label="New assessment" />
-            <QuickAction to="/chat" icon={<MessagesSquare className="h-4 w-4" />} label="Ask AI" />
-            <QuickAction to="/history" icon={<FileText className="h-4 w-4" />} label="View reports" />
-            <QuickAction
-              to="/education"
-              icon={<BookOpen className="h-4 w-4" />}
-              label="Health education"
-            />
           </div>
         </section>
 
@@ -322,22 +303,3 @@ function ActivityRow({ icon, item }: { icon: ReactNode; item: Activity }) {
   );
 }
 
-function QuickAction({
-  to,
-  icon,
-  label,
-}: {
-  to: FeatureTo;
-  icon: ReactNode;
-  label: string;
-}) {
-  return (
-    <Link
-      to={to}
-      className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:border-primary hover:text-primary"
-    >
-      <span className="text-primary">{icon}</span>
-      {label}
-    </Link>
-  );
-}

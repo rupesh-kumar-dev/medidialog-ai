@@ -12,8 +12,12 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "@/lib/auth";
+import { ThemeProvider } from "@/lib/theme";
 import { SiteShell } from "@/components/site-shell";
 import { Toaster } from "@/components/ui/sonner";
+
+// Applies the stored theme before first paint so dark mode doesn't flash light.
+const THEME_BOOTSTRAP = `(function(){try{var t=localStorage.getItem('medisage-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.classList.toggle('dark',t==='dark');document.documentElement.style.colorScheme=t;}catch(e){}})();`;
 
 function NotFoundComponent() {
   return (
@@ -115,9 +119,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP }} />
       </head>
       <body>
         {children}
@@ -132,13 +137,15 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <SiteShell>
-          {/* Required: nested routes render here. */}
-          <Outlet />
-        </SiteShell>
-        <Toaster richColors position="top-center" />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <SiteShell>
+            {/* Required: nested routes render here. */}
+            <Outlet />
+          </SiteShell>
+          <Toaster richColors position="top-center" />
+        </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
