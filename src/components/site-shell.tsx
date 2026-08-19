@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
   BookOpen,
@@ -13,6 +14,7 @@ import { useState, type ReactNode } from "react";
 import { toast } from "sonner";
 
 import { Logo } from "@/components/brand";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
