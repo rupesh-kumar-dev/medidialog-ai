@@ -34,7 +34,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       stored = null;
     }
     const next =
-      stored ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      stored ??
+      (document.documentElement.classList.contains("dark")
+        ? "dark"
+        : window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
     setThemeState(next);
     applyTheme(next);
   }, []);
