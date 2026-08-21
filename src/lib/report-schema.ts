@@ -5,12 +5,22 @@ export type TestStatus = (typeof testStatusValues)[number];
 
 export const labTestSchema = z.object({
   name: z.string(),
+  category: z.string().default(""),
   result: z.string().default(""),
   unit: z.string().default(""),
   reference_range: z.string().default(""),
   reference_source: z.enum(["report", "general", "none"]).default("none"),
   status: z.string().default("unknown"),
   explanation: z.string().default(""),
+  possible_reasons: z.array(z.string()).default([]),
+  discuss_with_doctor: z.string().default(""),
+  needs_attention: z.string().default(""),
+});
+
+export const patientSchema = z.object({
+  name: z.string().default(""),
+  age: z.string().default(""),
+  gender: z.string().default(""),
 });
 
 export const reportAnalysisSchema = z.object({
@@ -18,12 +28,14 @@ export const reportAnalysisSchema = z.object({
   unreadable_reason: z.string().default(""),
   document_type: z.string().default("other"),
   title: z.string().default(""),
+  patient: patientSchema.default({ name: "", age: "", gender: "" }),
   lab_name: z.string().default(""),
   report_date: z.string().default(""),
   tests: z.array(labTestSchema).default([]),
   summary: z.string().default(""),
   abnormal_findings: z.array(z.string()).default([]),
   interpretation: z.string().default(""),
+
   image_review: z
     .object({
       quality: z.string().default(""),
