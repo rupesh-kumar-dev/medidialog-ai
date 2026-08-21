@@ -288,7 +288,7 @@ export const doctorVisitSummary = createServerFn({ method: "POST" })
       ? (
           await supabase
             .from("assessments")
-            .select("created_at, symptoms, summary, risk_level, result")
+            .select("created_at, symptoms, summary, risk_level, possible_conditions, recommendations")
             .in("id", data.assessmentIds)
         ).data
       : [];
